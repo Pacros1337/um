@@ -1,127 +1,78 @@
-<?php
+package pacman;
 
+import javafx.collections.ObservableList;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
-$request_dir = '/src/pages/';
+public class Mapa {
 
+    private Circle[][] hraciPole;
+    private ObservableList list;
 
+    public Mapa(ObservableList list) {
+        this.list = list;
+    }
 
-
-
-
-
-if (!isset($_GET['page'])) {
-    $_GET["page"] = 'vypis';
-}
-
-
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="author" content="Patrik Pala">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="" viewport
-    " content="width=device-width, initial-scale=1,
-    shrink-to-fit=no">
-    <title>SHOP</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
-    <link href="styl.css" rel="stylesheet" type="text/css"/>
-</head>
-
-<body>
-<div class=""></div>
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<!-- Popper JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
-
-<nav class="navbar navbar-expand-md bg-dark navbar-dark">
-    <!-- Brand -->
-    <a class="navbar-brand" href="index.php"> <i class="fa fa-mobile" aria-hidden="true"> </i>&nbsp;&nbsp; Pacros Mobily</a>
-
-    <!-- Toggler/collapsibe Button -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Navbar links -->
-    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link active" href="index.php">Produkty</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Kategorie</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="checkout.php">Checkout</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="cart.php"><i class="fa fa-cart-arrow-down" aria-hidden="true"> <span
-                                id="cart-item" class="badge badge-danger">1</span></i></a>
-            </li>
-        </ul>
-    </div>
-</nav>
-<div class="mt-5 pl-5">
-<form action="form.php" method="post">
-    Search: <input type="text" name="term" /><br />
-
-    <input type="submit" value="Submit" />
-</form>
-</div>
-<div class="container">
-    <div class="row mt-5 pb-1">
-        <?php
-        include 'config.php';
-        $stmt = $conn->prepare("SELECT * FROM product");
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-
-        switch ($_GET["page"]) {
-            case 'vypis':
-
-              
-
-
-                require_once("vypis.php");
-
-                break;
-            case 'detail':
-
-
-                require_once('detail.php');
-                break;
-            default:
-                echo "def";
-
-                break;
-
+    private void vodorovne(int radek, int a, int b) {
+        for (int i = a; i <= b; i++) {
+            hraciPole[i][radek] = new Circle(i * 26, radek * 26, 10);
+            list.add(hraciPole[i][radek]);
         }
 
+    }
 
-        ?>
+    private void svisle(int sloupec, int a, int b) {
+        for (int i = a; i <= b; i++) {
+            hraciPole[sloupec][i] = new Circle(sloupec * 26, i * 26, 10);
+            list.add(hraciPole[sloupec][i]);
+        }
+
+    }
+
+    private void obdelnik(int x, int y, int s, int v) {
+        Rectangle o = new Rectangle(x, y, s, v);
+        o.setFill(Color.BLUE);
+        list.add(o);
+    }
 
 
-    </div>
-</div>
 
+    public void mapa1() {
+        hraciPole = new Circle[40][40];
+        obdelnik(285, 531, 112, 77);
+        obdelnik(97, 70, 49, 311);
+        obdelnik(146, 70, 208, 43);
+        obdelnik(493, 510, 143, 43);
+        obdelnik(481, 603, 41, 63);
+        obdelnik(97, 531, 77, 110);
+        obdelnik(56, 437, 208, 32);
+        obdelnik(34, 703, 286, 69);
+        obdelnik(319, 703, 286, 69);
+        obdelnik(393, 390, 236, 32);
+        obdelnik(286, 304, 257, 32);
+        obdelnik(273, 149, 30, 84);
+        obdelnik(382, 160, 89, 63);
+        obdelnik(523, 52, 41, 163);
+        svisle(1, 1, 31);
+        vodorovne(19, 1, 25);
+        vodorovne(26, 1, 25);
+        vodorovne(16, 1, 13);
+        svisle(25, 1, 30);
+        vodorovne(1, 2, 25);
+        vodorovne(31, 1, 25);
+        svisle(7, 5, 15);
+        vodorovne(5, 7, 17);
+        svisle(17, 1, 4);
+        svisle(13, 16, 19);
+        svisle(9, 20, 25);
+        svisle(17, 20, 25);
+        vodorovne(10, 7, 25);
 
-<footer class="bg-dark">
-    <p>Pacrosak &copy; 2045 hahaxd</p>
-</footer>
+    }
 
-</body>
-</html>
+    public Circle[][] getHraciPole() {
+        return hraciPole;
+    }
+
+}
